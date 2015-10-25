@@ -1,0 +1,380 @@
+# vim:filetype=i3
+# ~/.i3/config
+#
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config is for the i3-gaps fork of i3 (github.com/airblader/i3),
+# so some settings will not work on regular i3
+#
+
+###############
+## Variables ##
+###############
+# set mod key to super or windows key
+set $mod 	Mod4
+
+# window borders 
+set $borders 	3
+# number of pixels to resize windows by
+set $resize 	5
+
+# gaps (outer and inner)
+set $gapso		5
+set $gapsi      15
+
+# terminal
+set $term xfce4-terminal
+
+###################
+## Configuration ##
+###################
+focus_follows_mouse			    false
+popup_during_fullscreen		    smart
+workspace_layout			    default
+# go back to prev workspace if key pressed twice
+workspace_auto_back_and_forth   true
+
+################
+## Appearance ##
+################
+# Font for window titles and bar
+# (unless a different font is specified in bar{} )
+font  pango:Terminus 8
+
+# window borders
+hide_edge_borders	none
+new_float 			pixel $borders
+new_window			pixel $borders
+smart_borders		no_gaps
+
+# gaps
+gaps inner	$gapsi
+gaps outer	$gapso
+
+
+# ----
+# Media Keybindings
+# ----
+bindsym $mod+plus exec pulseaudio-ctl up
+bindsym $mod+Shift+plus exec pulseaudio-ctl down
+#bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
+#bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
+#bindsym XF86AudioMute exec pulseaudio-ctl mute
+
+
+#################
+## Keybindings ##
+#################
+## System ##
+# logout
+bindsym $mod+Shift+e exec --no-startup-id ~/.local/bin/logout-menu.sh
+# restart i3
+bindsym $mod+Shift+r	restart
+# reload config file
+bindsym $mod+Shift+c	reload
+# screenshot
+bindsym Print			exec xfce4-screenshooter
+#bindsym Shift+Print     exec --no-startup-id ~/.local/bin/screenshot.sh
+# disable gaps
+bindsym $mod+n			gaps inner current set 0; gaps outer current set 0
+# re-enable gaps
+bindsym $mod+m			gaps inner current set $gapsi; gaps outer current set $gapso
+# close current window
+bindsym $mod+Shift+q	kill
+# backlght controls
+bindsym XF86MonBrightnessUp 	exec --no-startup-id xbacklight -inc 10 && pkill -SIGRTMIN+12 i3blocks
+bindsym XF86MonBrightnessDown 	exec --no-startup-id xbacklight -dec 10 && pkill -SIGRTMIN+12 i3blocks
+# screen locking
+bindsym $mod+Ctrl+L exec ~/scripts/lock.sh
+# caffeine mode (disables screen blanking and automatic suspend)
+bindsym F7 exec ~/.local/bin/caffeine.sh
+
+## Audio ##
+# volume controls
+ bindsym XF86AudioRaiseVolume exec --no-startup-id   ~/.local/bin/volume.sh +
+ bindsym XF86AudioLowerVolume exec --no-startup-id   ~/.local/bin/volume.sh -
+ bindsym XF86AudioMute exec --no-startup-id          ~/.local/bin/volume.sh !
+# microphone
+bindsym XF86AudioMicMute exec --no-startup-id       amixer set Capture toggle
+# music
+bindsym $mod+bracketleft exec --no-startup-id    ~/.local/bin/music.sh prev
+bindsym $mod+bracketright exec --no-startup-id   ~/.local/bin/music.sh next
+bindsym $mod+backslash exec --no-startup-id      ~/.local/bin/music.sh toggle
+
+## Focus keybindings ##
+# focus parent
+bindsym $mod+a 			focus parent
+# focus child
+bindsym $mod+b 			focus child
+# change focus
+# use standard vim keys
+bindsym $mod+h 			focus left
+bindsym $mod+j 			focus down
+bindsym $mod+k 			focus up
+bindsym $mod+l 	        focus right
+# cursor keys
+bindsym $mod+Left 		focus left
+bindsym $mod+Down 		focus down
+bindsym $mod+Up 		focus up
+bindsym $mod+Right 		focus right
+# focus last urgent window
+bindsym $mod+u          [urgent=latest] focus
+
+## Workspace keybindings ##
+# workspace names
+set $ws1    "1:zsh"
+set $ws2    "2:sh2"
+set $ws3    "3:pdf"
+set $ws4    "4:web"
+set $ws5    "5:music"
+set $ws6    "6:sh3"
+set $ws7    "7:sh4"
+set $ws8    "8:sh5"
+set $ws9    "9:sh6"
+
+# switch to workspace
+bindsym $mod+comma      workspace prev
+bindsym $mod+period     workspace next
+bindsym $mod+1 			workspace $ws1
+bindsym $mod+2 			workspace $ws2
+bindsym $mod+3 			workspace $ws3
+bindsym $mod+4 			workspace $ws4
+bindsym $mod+5 			workspace $ws5
+bindsym $mod+6 			workspace $ws6
+bindsym $mod+7 			workspace $ws7
+bindsym $mod+8 			workspace $ws8
+bindsym $mod+9 			workspace $ws9
+
+# move focused container to workspace
+bindsym $mod+Shift+comma  move container to workspace prev
+bindsym $mod+Shift+period move container to workspace next
+bindsym $mod+Shift+1 	move container to workspace $ws1
+bindsym $mod+Shift+2 	move container to workspace $ws2
+bindsym $mod+Shift+3 	move container to workspace $ws3
+bindsym $mod+Shift+4 	move container to workspace $ws4
+bindsym $mod+Shift+5	move container to workspace $ws5
+bindsym $mod+Shift+6	move container to workspace $ws6
+bindsym $mod+Shift+7 	move container to workspace $ws7
+bindsym $mod+Shift+8 	move container to workspace $ws8
+bindsym $mod+Shift+9 	move container to workspace $ws9
+
+
+## Movement ##
+# move focused window
+bindsym $mod+Shift+h 			move left
+bindsym $mod+Shift+j 			move down
+bindsym $mod+Shift+k 			move up
+bindsym $mod+Shift+l         	move right
+# cursor keys
+bindsym $mod+Shift+Left 		move left
+bindsym $mod+Shift+Down 		move down
+bindsym $mod+Shift+Up 			move up
+bindsym $mod+Shift+Right 		move right
+
+## Layout ##
+# layout mode
+#bindsym $mod+s             layout stacking
+# bindsym $mod+Shift+t        layout tabbed
+bindsym $mod+e 			    layout toggle split
+bindsym $mod+f			    fullscreen
+bindsym $mod+Shift+space    floating toggle
+# splitting mode
+bindsym $mod+g 		split h
+bindsym $mod+v 		split v
+# floating mode
+floating_modifier 	$mod
+bindsym $mod+space	focus mode_toggle
+
+# sticky window (newest version of i3)
+bindsym $mod+Shift+s sticky toggle
+
+## Scratchpad ##
+# make current window scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# toggle show scratchpad
+bindsym $mod+minus scratchpad show
+
+## Applications ##
+# start terminal
+bindsym $mod+Return	exec $term
+# dmenu
+bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/dmenu_run.sh
+# rofi (more features than dmenu)
+bindsym $mod+d exec --no-startup-id rofi -show run -width 1600 -padding 500 -lines 5 -bg "#282828" -bc "#282828" -fg "#FFFFFF" -font "hack 14"
+bindsym $mod+p exec --no-startup-id j4-dmenu-desktop --dmenu="rofi -dmenu -p run: -width 1600 -padding 500 -lines 5 -bg "#282828" -fg "#FFFFFF" -font "hack22" -i"
+bindsym $mod+w exec --no-startup-id rofi -show window
+
+for_window [title="^floating"] floating enable
+# start htop
+bindsym $mod+Ctrl+h exec  $term -T floating -e htop
+ # start a floating terminal
+#bindsym $mod+t exec ~/.bin/drawterm.sh xfce4-terminal
+bindsym $mod+t exec xfce4-terminal -T "floating terminal" 
+# -e chuck_cow
+
+###################################
+## Specific windows / workspaces ##
+###################################
+ # configurations for specific windows
+# for_window [class="^Spotify$"] 			floating enable
+for_window [class="^Ristretto$"] 		floating enable
+for_window [class="Gimp"]               floating enable
+for_window [class="^Pavucontrol$"] 		floating enable
+for_window [class="^z80e-sdl$"] 		floating enable
+for_window [class="^Xfce4-appfinder$"] 	floating enable
+for_window [instance="DTA" class="Firefox"]     floating enable
+for_window [title="Add Downloads"]              floating enable
+for_window [title="VirtualBox"]         floating enable
+
+# "web" workspace
+assign [class="Firefox"] 	    $ws4
+assign [class="Chromium"]	    $ws4
+# workspace $ws4				    gaps outer 5
+# workspace $ws4				    gaps inner 5
+
+# "music" workspace
+assign [class="Spotify"]	    $ws5
+assign [class="spotify"]        $ws5
+assign [class="Rhythmbox"]      $ws5
+assign [class="PaleMoon"]       $ws5
+
+# Documents workspace
+assign [class="Zathura"]        $ws3
+for_window [class="Zathura"]    layout tabbed
+workspace $ws3                  gaps outer 20
+workspace $ws3                  gaps inner 0
+
+
+###########
+## Modes ##
+###########
+## Gaps mode ##
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+## Resize Mode ##
+# normal - grow, shift+opposite - shrink
+mode "resize" {
+        # vim keys
+        bindsym h resize grow left $resize px or $resize ppt
+        bindsym k resize grow up $resize px or $resize ppt
+        bindsym j resize shrink down $resize px or $resize ppt
+        bindsym l resize grow right $resize px or $resize ppt
+
+        bindsym Shift+l resize shrink left $resize px or $resize ppt
+        bindsym Shift+j resize shrink up $resize px or $resize ppt
+        bindsym Shift+k resize shrink down $resize px or $resize ppt
+        bindsym Shift+h resize shrink right $resize px or $resize ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize grow left $resize px or $resize ppt
+        bindsym Up resize grow up $resize px or $resize ppt
+        bindsym Down resize grow down $resize px or $resize ppt
+        bindsym Right resize grow right $rsize px or $resize ppt
+
+        bindsym Shift+Right resize shrink left $resize px or $resize ppt
+        bindsym Shift+Down resize shrink up $resize px or $resize ppt
+        bindsym Shift+Up resize shrink down $resize px or $resize ppt
+        bindsym Shift+Left resize shrink right $resize px or $resize ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+## Ignore mode ##
+mode "Ignore" {
+    # all keypresses, except esc and return, ignored
+    bindsym Return mode default
+    bindsym Escape mode default
+}
+bindsym $mod+Shift+i mode Ignore
+
+
+#######################################
+##    Startup programs             ####
+#######################################
+# start pulseaudio, compositor, and set wallpaper in ~/.xinitrc
+#exec --no-startup-id dropbox
+# exec --no-startup-id nm-applet
+# exec --no-startup-id xss-lock -- ~/.local/bin/i3lock.sh
+exec --no-startup-id xautolock -time 5 -locker "lock"
+exec --no-startup-id xautolock -time 15 -locker "systemctl suspend"
+exec --no-startup-id redshift-gtk
+
+
+#########
+## Bar ##
+#########
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    strip_workspace_numbers no
+    position top
+    status_command i3status | ~/.config/i3status/i3status.py
+    status_command ~/.config/i3status/wraper.sh
+    status_command i3blocks
+    tray_output eDP1
+	separator_symbol " "
+  font pango:Fira Mono for Powerline 10.5
+  colors {
+    background #343d46
+    statusline #eff1f5
+    separator #323232
+    focused_workspace #a3be8c #65737e #eff1f5
+    active_workspace #4f5b66 #5f676a #eff1f5
+    inactive_workspace #4f5b66 #4f5b66 #a7adba
+    urgent_workspace #bf616a #65737e #eff1f5
+  }
+ }
+
+
+# bar {
+#  i3bar_command ~/.i3/lemonbar/i3_lemonbar.sh
+# }
+
+
+exec --no-startup-id "pulseaudio --start"
+
+# window colors
+#                           border background text indicator
+client.focused              #96b5b4 #96b5b4 #ebdbb2 #96b5b4
+client.focused_inactive     #65737e #65737e #ebdbb2 #65737e
+client.unfocused            #65737e #65737e #ebdbb2 #65737e
+client.urgent               #bf616a #bf616a #ee0000 #bf616a
