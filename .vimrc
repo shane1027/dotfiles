@@ -13,10 +13,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-unimpaired'
-" Source code completion
-Plugin 'Valloric/YouCompleteMe'
-"navigate between Vim and tmux seamlessly
-Plugin 'christoomey/vim-tmux-navigator'
 "Colorscheming!
 Plugin 'flazz/vim-colorschemes'
 " YCM config generator
@@ -34,7 +30,8 @@ Plugin 'scrooloose/nerdtree'
 " highlight color codes with proper colors
 Plugin 'Colorizer'
 " fancy status line
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Color scheme previewer
 Plugin 'ScrollColors'
 " i3 config syntax highlighting
@@ -177,6 +174,10 @@ set pastetoggle=<F2>
 
 " make vim use X11 clipboard (needs clipboard support)
 set clipboard=unnamedplus
+
+" handle curly braces like an IDE
+inoremap {<CR> {<CR><CR><BS>}<Esc>ko}<BS><CR><esc>ki<tab>
+
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -207,6 +208,13 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
+" Navigate through open windows using Alt + arrow keys :3
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
+
 "}}}
 
 """""""""""""""""""""""""""""
@@ -273,14 +281,13 @@ map <C-x> :x<CR>
 " <Ctrl-I> redraws the screen and removes any search highlighting
 nnoremap <silent> <C-I> :nohl<CR><C-I>
 
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-u> :TmuxNavigatePrevious<cr>
-
 " toggle wrapping
 nmap \w :setlocal wrap!<CR> :setlocal wrap?<CR>
+
+" set global fallback config file for YCM
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_global_conf.py'
+let g:ycm_confirm_extra_conf = 0
+
 " }}}
 
 """""""""""""""""""""""""""""
