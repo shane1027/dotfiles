@@ -1,0 +1,13 @@
+
+! make caps lock function as ctrl, and shift+caps function as caps
+clear lock
+clear control  
+add control = Control_L
+keycode 66 = Control_L
+add control = Control_L
+add lock = Control_R
+
+! clear lock
+! clear control
+! keycode 66 = Control_L
+! add control = Control_L Control_R

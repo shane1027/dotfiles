@@ -41,8 +41,6 @@ Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'chriskempson/base16-vim'
-" Plugin to prevent opening a directory in a new tab w/ NT
-" Plugin 'Nopik/vim-nerdtree-direnter'
 
 call vundle#end()
 filetype plugin indent on
@@ -61,10 +59,6 @@ set autoread
 set ttimeout
 set ttimeoutlen=100
 
-" set word wrap 
-set tw=79
-
-" change <Leader> to space bar for easier action
 let mapleader=','
 let g:mapleader=','
 " faster commands
@@ -113,11 +107,6 @@ set mat=2
 set noerrorbells
 set novisualbell
 set t_vb=
-
-" Make NerdTree open files in a new tab
-" let NERDTreeMapOpenInTab='<ENTER>'
-
-
 " }}}
 
 """""""""""""""""""""""""""""
@@ -131,9 +120,6 @@ nnoremap <space> za
 set foldmethod=indent  " fold based on indent level
 " Add a bit extra margin to the left
 set foldcolumn=1
-" To use markers {{{,}}}
-" set foldmethod=marker
-" set foldmarker={{{,}}}
 " }}}
 
 """""""""""""""""""""""""""""
@@ -192,13 +178,6 @@ set clipboard=unnamedplus
 " handle curly braces like an IDE
 inoremap {<CR> {<CR><CR><BS>}<Esc>ko}<BS><CR><esc>ki<tab>
 
-" use enter to make a new line, shift+enter for break at current point
-nnoremap <CR> o<Esc>
-nnoremap <S-CR> i<CR><Esc>
-" Needed for GVIm
-nnoremap ^[0M i<CR><Esc>
-" Needed for CLI VIm (Note: ^[0M was created with Ctrl+V Shift+Enter, don't type it directly)
-
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -207,34 +186,9 @@ nnoremap ^[0M i<CR><Esc>
 " allow files to be open but not displayed
 set hidden
 
-" moving between recent buffers
-" doesn't work since this is nerdtree toggle: nnoremap <C-N> :bnext<CR>
+" moving between buffers
+nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
-
-" Mappings to access buffers (don't use "\p" because a
-" delay before pressing "p" would accidentally paste).
-" \l       : list buffers
-" \b \f \g : go back/forward/last-used
-" \1 \2 \3 : go to buffer 1/2/3 etc
-nnoremap <Leader>l :ls<CR>
-nnoremap <Leader>b :bp<CR>
-nnoremap <Leader>f :bn<CR>
-nnoremap <Leader>g :e#<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
-" It's useful to show the buffer number in the status line.
-" set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-
-" open list of buffers with <F5>
-:nnoremap <F5> :buffers<CR>:buffer<Space>
 
 " Treat long lines as break lines (useful when moving around in them)
 nmap j gj
@@ -396,30 +350,4 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " }}}
 
-""""""""""""""""""""""""""""
-" => NerdCommenter {{{
-""""""""""""""""""""""""""""
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-"
-" " Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-"
-" " Align line-wise comment delimiters flush left instead of following code
-" indentation
-let g:NERDDefaultAlign = 'left'
-"
-" " Set a language to use its alternate delimiters by default
-" let g:NERDAltDelims_java = 1
-"
-" " Add your own custom formats or override the defaults
-" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-"
-" " Allow commenting and inverting empty lines (useful when commenting a
-" region)
-" let g:NERDCommentEmptyLines = 1
-"
-" " Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" }}}
-
+" vim:foldmethod=marker:foldlevel=0
