@@ -12,6 +12,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'christoomey/vim-tmux-navigator'
+" integrate normal vim split movements with tmux!!!
 Plugin 'tpope/vim-unimpaired'
 "Colorscheming!
 Plugin 'flazz/vim-colorschemes'
@@ -43,6 +45,16 @@ Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'chriskempson/base16-vim'
 " Plugin to prevent opening a directory in a new tab w/ NT
 " Plugin 'Nopik/vim-nerdtree-direnter'
+" Built-in (?) plugin for better man page handling
+Plugin 'vim-utils/vim-man'
+" List-toggle plugin - check out error locations!
+" Plugin 'Valloric/ListToggle'
+" the above doesn't seem to work correctly, or I've configured it wrong
+" doesn't populate location list or view it correctly
+" whatevs, just write my own plugin for toggling / functions for quickfixes
+Plugin 'nightsense/vim-crunchbang'
+" tmux powerline vim integration coolness
+Plugin 'edkolev/tmuxline.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -117,6 +129,9 @@ set t_vb=
 " Make NerdTree open files in a new tab
 " let NERDTreeMapOpenInTab='<ENTER>'
 
+" Set the column width of the NerdTree window
+let g:NERDTreeWinSize = 25
+
 
 " }}}
 
@@ -142,9 +157,16 @@ set foldcolumn=1
 " Enable syntax highlighting
 syntax enable 
 
+"" below is my old jellybeans config
 set t_Co=256
-" set background=dark
+set background=dark
 colorscheme jellybeans 
+
+" current solarized config w/ light and dark toggle
+" set t_Co=256
+" colorscheme solarized
+" set background=dark
+"let g:solarized_termtrans=1
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -189,8 +211,13 @@ set pastetoggle=<F2>
 " make vim use X11 clipboard (needs clipboard support)
 set clipboard=unnamedplus
 
+"" NOTE: for some reason, on these few commands, I can't get ctrl/Shift+Enter
+"" to function properly as mappings... they don't register when typing in vim
+
 " handle curly braces like an IDE
-inoremap {<CR> {<CR><CR><BS>}<Esc>ko}<BS><CR><esc>ki<tab>
+" inoremap {<CR> {<CR><BS>}<Esc>ko}<BS><esc>i<tab>
+inoremap {<CR> {<CR><CR><BS>}<Esc>2ko<del>
+inoremap {<c-CR> {<CR><CR><BS>}<Esc>2ko<CR>
 
 " use enter to make a new line, shift+enter for break at current point
 nnoremap <CR> o<Esc>
@@ -206,6 +233,14 @@ nnoremap ^[0M i<CR><Esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " allow files to be open but not displayed
 set hidden
+
+" open man pages with viman from plugin
+nnoremap K :execute 'Man '.expand("<cword>")<cr>
+nnoremap <C-K> :execute 'tabnew ! Man '.expand("<cword>")<cr>
+
+" relative line numbers as well as absolute current line
+set relativenumber
+set number
 
 " moving between recent buffers
 " doesn't work since this is nerdtree toggle: nnoremap <C-N> :bnext<CR>
@@ -266,6 +301,8 @@ nmap <silent> <C-l> :wincmd l<CR>
 """""""""""""""""""""""""""""
 " => Status line {{{
 """""""""""""""""""""""""""""
+" note: syntastic settings also modify status line
+
 " Always show the status line
 set laststatus=2
 
@@ -334,6 +371,13 @@ nmap \w :setlocal wrap!<CR> :setlocal wrap?<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/.ycm_global_conf.py'
 let g:ycm_confirm_extra_conf = 0
 
+" set python server to point to python 2 by default
+let g:ycm_server_python_interpreter = '/usr/bin/python2.7'
+
+" use shift+cntrl+A to decrement numbers
+nnoremap <C-s> <C-x>
+
+
 " }}}
 
 """""""""""""""""""""""""""""
@@ -358,7 +402,9 @@ let g:airline_detect_paste=1
 " install powerline fonts to use special symbols
 let g:airline_powerline_fonts=1
 
-let g:airline_theme='jellybeans'
+let g:airline_theme='ubaryd'
+" let g:airline_theme='jellybeans'
+" let g:airline_theme='solarized'
 
 " show buffers in tabline
 let g:airline#extensions#tabline#enabled=1
@@ -377,9 +423,27 @@ autocmd BufRead,BufNewFile *.cpp,*hpp :let g:ycm_global_ycm_extra_conf = "~/.vim
 " disable confirmation of conf files
 let g:ycm_confirm_extra_conf=0
 
+" enable for looking through location list - view errors all at once
+let g:ycm_always_populate_location_list = 1
+
 " autoclose preview window
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_autoclose_preview_window_after_insertion=1
+
+" Force YCM to recompile entire file - note: gui freezes during this process
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
+
+" <list toggle setting which I use as a complement to YCM so included here>
+" toggle location and quickfix lists
+nnoremap <F7> :lt_location_list_toggle_map<CR>
+nnoremap <F8> :lt_quickfix_list_toggle_map<CR>
+
+" Automatically accept a QuickFix
+nnoremap <F9> :YcmCompleter FixIt<CR>
+
+
+ 
+
 " }}}
 
 """""""""""""""""""""""""""""
@@ -392,9 +456,25 @@ let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " open nerdtree if no file is specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " }}}
+"
+
+"""""""""""""""""""""""""""""
+" => Syntastic {{{
+"""""""""""""""""""""""""""""
+
+" recommended default settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 """"""""""""""""""""""""""""
 " => NerdCommenter {{{
