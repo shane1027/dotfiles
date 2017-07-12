@@ -488,6 +488,12 @@ let g:NERDCompactSexyComs = 1
 " " Align line-wise comment delimiters flush left instead of following code
 " indentation
 let g:NERDDefaultAlign = 'left'
+
+" Use secondary algo for checking indentation consistencies, removing false
+" positives from block C/C++ comments
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+
 "
 " " Set a language to use its alternate delimiters by default
 " let g:NERDAltDelims_java = 1

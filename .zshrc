@@ -50,7 +50,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git chucknorris rand-quote archlinux per-directory-history)
+plugins=(git wd chucknorris rand-quote archlinux per-directory-history)
 # for per-directory-history, switch between local and global command history
 # using ctrl+g keybinding
 # # dir-history enables directory movement w/ alt+left, right
@@ -163,6 +163,13 @@ alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance
 # and then uses ssh to login to an appropriate campus machine.
 alias remote="ssh sryan8@remote101.helios.nd.edu"
 alias student="ssh sryan8@student00.cse.nd.edu"
+# more alias stuffz
+alias g="grep"
+alias ls="ls --color=auto"
 
+# start a tmux shell with login
+if [[ ! $TERM =~ screen ]]; then
+    exec tmux
+fi
 
 
