@@ -50,7 +50,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd chucknorris rand-quote archlinux per-directory-history)
+plugins=(git wd chucknorris colored-man-pages rand-quote archlinux per-directory-history)
 # for per-directory-history, switch between local and global command history
 # using ctrl+g keybinding
 # # dir-history enables directory movement w/ alt+left, right
@@ -87,6 +87,12 @@ plugins=(git wd chucknorris rand-quote archlinux per-directory-history)
 "
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# export android studio variable
+# export ANDROID_HOME=/opt/android-studio
+export ANDROID_HOME=/home/shane/Android/Sdk
+export ANDROID_SDK_HOME=/home/shane/Android/Sdk
+
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -100,6 +106,11 @@ export PATH="$HOME/bin:$PATH"
 
 
 # Run the following commands upon login
+ 
+# start a tmux shell with login
+if [[ ! $TERM =~ screen ]]; then
+    exec tmux
+fi
 
 # echo '\n'; chuck | cowsay;echo '\n'
 
@@ -131,15 +142,16 @@ stty -ixon
 # xmodmap ~/.Xmodmap
 
 # colored man pages!!!
-man() {
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[01;44;33m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    command man "$@"
-}
+# ## not currently useful since 'man' is an alias for viman vim plugin!
+# man() {
+#     LESS_TERMCAP_md=$'\e[01;31m' \
+#     LESS_TERMCAP_me=$'\e[0m' \
+#     LESS_TERMCAP_se=$'\e[0m' \
+#     LESS_TERMCAP_so=$'\e[01;44;33m' \
+#     LESS_TERMCAP_ue=$'\e[0m' \
+#     LESS_TERMCAP_us=$'\e[01;32m' \
+#     command man "$@"
+# }
 
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -166,10 +178,15 @@ alias student="ssh sryan8@student00.cse.nd.edu"
 # more alias stuffz
 alias g="grep"
 alias ls="ls --color=auto"
+# aliases for launching Office products in wine
+alias word="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/WINWORD.EXE"
 
-# start a tmux shell with login
-if [[ ! $TERM =~ screen ]]; then
-    exec tmux
-fi
+alias powerpoint="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/POWERPNT.EXE"
 
+alias excel="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/EXCEL.EXE"
+
+alias publisher="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/MSPUB.EXE"
+
+# alias for starting android emulator using system libraries for a nexus 5
+alias nexus5="~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_24 -use-system-libs"
 
