@@ -76,6 +76,10 @@ set ttimeoutlen=100
 " set word wrap 
 set tw=79
 
+" start tmuxline without vim running
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+
 " change <Leader> to space bar for easier action
 let mapleader=','
 let g:mapleader=','
