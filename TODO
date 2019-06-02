@@ -1,0 +1,8 @@
+- add script that hard links all files appropriately in the OS w/ those here
+
+- include copying / hard linking appropriate vim-airliner and zsh themes
+
+- write service to automatically detect changes every ~hour in this repo, and
+  commit them with a time and date stamp... only alert user if issue on merge.
+
+- also auto-sync w/ upstream in that service^^
