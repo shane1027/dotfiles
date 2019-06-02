@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/shane/.oh-my-zsh
+export ZSH=/home/shane/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -83,7 +83,10 @@ plugins=(git wd chucknorris colored-man-pages rand-quote archlinux per-directory
 
 # User configuration
 
-  export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/microchip/mplabx/v3.55/mplab_ide/bin
+# source scripts for node version manager
+source /usr/share/nvm/init-nvm.sh
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/microchip/mplabx/v3.55/mplab_ide/bin
 "
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -92,6 +95,12 @@ plugins=(git wd chucknorris colored-man-pages rand-quote archlinux per-directory
 export ANDROID_HOME=/home/shane/Android/Sdk
 export ANDROID_SDK_HOME=/home/shane/Android/Sdk
 
+# set theos environment variable
+export THEOS=~/theos
+export SDKVERSION=9.2
+
+# export keras backend to tensorflow
+export KERAS_BACKEND=tensorflow
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,7 +118,7 @@ export PATH="$HOME/bin:$PATH"
  
 # start a tmux shell with login
 if [[ ! $TERM =~ screen ]]; then
-    exec tmux
+  exec tmux
 fi
 
 # echo '\n'; chuck | cowsay;echo '\n'
@@ -140,6 +149,7 @@ stty -ixon
 # annoyingly, I can't get ~/.Xinitrc to work correctly, so I am adding the
 # command to remap caps and ctrl here instead
 # xmodmap ~/.Xmodmap
+# /usr/bin/xcape -e 'Caps_Lock=Escape' -t 100
 
 # colored man pages!!!
 # ## not currently useful since 'man' is an alias for viman vim plugin!
@@ -152,6 +162,12 @@ stty -ixon
 #     LESS_TERMCAP_us=$'\e[01;32m' \
 #     command man "$@"
 # }
+
+# function for viewing markdown files in terminal
+markdown() { pandoc "$1" | lynx -stdin; }
+
+# use older version of node for hostvana
+# nvm use 8.9.4
 
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -189,4 +205,8 @@ alias publisher="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/
 
 # alias for starting android emulator using system libraries for a nexus 5
 alias nexus5="~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_24 -use-system-libs"
+
+# empty that young  trash
+alias empty="rm -rf /home/shane/.local/share/Trash/files"
+
 

@@ -55,6 +55,12 @@ Plugin 'vim-utils/vim-man'
 Plugin 'nightsense/vim-crunchbang'
 " tmux powerline vim integration coolness
 Plugin 'edkolev/tmuxline.vim'
+" easy viewing of tagbar file w/ f8
+Plugin 'majutsushi/tagbar'
+" vim-misc to load vim scripts such as easytags
+" Plugin 'xolox/vim-misc'
+" auto-gen tags file on open
+" Plugin 'xolox/vim-easytags'
 
 call vundle#end()
 filetype plugin indent on
@@ -125,6 +131,10 @@ set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
+" toggle displaying whitespace characters
+set list          " Display unprintable characters f12 - switches
+set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
+
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -134,7 +144,7 @@ set t_vb=
 " let NERDTreeMapOpenInTab='<ENTER>'
 
 " Set the column width of the NerdTree window
-let g:NERDTreeWinSize = 25
+let g:NERDTreeWinSize = 35
 
 
 " }}}
@@ -220,8 +230,11 @@ set clipboard=unnamedplus
 
 " handle curly braces like an IDE
 " inoremap {<CR> {<CR><BS>}<Esc>ko}<BS><esc>i<tab>
-inoremap {<CR> {<CR><CR><BS>}<Esc>2ko<del>
-inoremap {<c-CR> {<CR><CR><BS>}<Esc>2ko<CR>
+" inoremap {<CR> {<CR><CR><BS>}<Esc>2ko<del>
+" inoremap {<c-CR> {<CR><CR><BS>}<Esc>2ko<CR>
+inoremap {<CR> {<CR>}<Esc>ko<tab><BS>
+inoremap [<CR> [<CR>]<Esc>ko<tab>
+inoremap (<CR> (<CR>)<Esc>ko<tab>)]}
 
 " use enter to make a new line, shift+enter for break at current point
 nnoremap <CR> o<Esc>
@@ -272,8 +285,8 @@ nnoremap <Leader>0 :10b<CR>
 " It's useful to show the buffer number in the status line.
 " set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
-" open list of buffers with <F5>
-:nnoremap <F5> :buffers<CR>:buffer<Space>
+" open list of buffers with <F4>
+:nnoremap <F4> :buffers<CR>:buffer<Space>
 
 " Treat long lines as break lines (useful when moving around in them)
 nmap j gj
@@ -345,6 +358,9 @@ autocmd BufNewFile,BufRead *.md :set filetype=markdown
 
 " mutt files
 autocmd BufNewFile,BufRead *mutt-* :set filetype=mail
+
+" run python code from within the dev window
+autocmd FileType python nnoremap <buffer> <F9> :exec '!python2' shellescape(@%, 1)<cr>
 
 " command line mode more like a command line
 cnoremap <C-a>  <Home>
@@ -440,12 +456,24 @@ nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 " <list toggle setting which I use as a complement to YCM so included here>
 " toggle location and quickfix lists
 nnoremap <F7> :lt_location_list_toggle_map<CR>
-nnoremap <F8> :lt_quickfix_list_toggle_map<CR>
+"nnoremap <F8> :lt_quickfix_list_toggle_map<CR>
+nmap <F8> :TagbarToggle<CR>
 
 " Automatically accept a QuickFix
-nnoremap <F9> :YcmCompleter FixIt<CR>
+" nnoremap <F9> :YcmCompleter FixIt<CR>
 
+" Java completion config using eclim
+let g:EclimCompletionMethod = 'omnifunc'
 
+" Java compiling and error switching
+" autocmd Filetype java set makeprg=javac\ %
+" set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+" map <F9> :make<Return>:copen<Return>
+" map <F10> :cprevious<Return>
+" map <F11> :cnext<Return>
+
+" manually add the javarun.vim plugin
+" set runtimepath^=~/.vim/bundle/JavaRun/
  
 
 " }}}
@@ -454,6 +482,7 @@ nnoremap <F9> :YcmCompleter FixIt<CR>
 " => NerdTree {{{
 """""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
+map <C-m> :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
 
 " close vim if only nerdtree is left open
@@ -478,6 +507,17 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+
+"" delimitMate and related completions
+
+" jump out of completed delimiters with cntrl + l (like pane movement)
+imap <C-L> <Plug>delimitMateS-Tab
+
+" allow for cntrl + a or e for end / begin navigation in insert mode
+imap <C-A> <C-O>0
+imap <C-E> <C-O>$
+
 
 
 """"""""""""""""""""""""""""
