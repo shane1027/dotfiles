@@ -1,25 +1,39 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/home/shane/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="agnoster"
+# Path to your oh-my-zsh installation.
+  export ZSH="/home/shane/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="shane-custom"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -28,10 +42,10 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -40,92 +54,30 @@ COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd chucknorris colored-man-pages rand-quote archlinux per-directory-history)
-# for per-directory-history, switch between local and global command history
-# using ctrl+g keybinding
-# # dir-history enables directory movement w/ alt+left, right
-
-   # archlinux
-
-   # Maintainer: Benjamin Boudreau
-
-   # Enabled aliases for pacman (replace pac by ya for yaourt)
-
-   # Alias   Description
-   # pacin   Install specific package(s) from the repositories
-   # pacins  Install specific package not from the repositories but from a file
-   # pacre   Remove the specified package(s), retaining its configuration(s) and required dependencies
-   # pacrem  Remove the specified package(s), its configuration(s) and unneeded dependencies
-   # pacrep  Display information about a given package in the repositories
-   # pacreps Search for package(s) in the repositories
-   # pacloc  Display information about a given package in the local database
-   # paclocs Search for package(s) in the local database
-   # pacupd  Update and refresh the local package and ABS databases against repositories
-   # pacupg  Update the local database and upgrade packages
-   # pacinsd Install given package(s) as dependencies of another package
-   # pacmir  Force refresh of all package lists after updating /etc/pacman.d/mirrorlist
-   # Function    Description
-   # paclist List all installed packages with a short description - Source
-   # paclsorphans    List all orphaned packages
-   # pacrmorphans    Delete all orphaned packages
-   # pacdisowned | less +F   List all disowned files in your system
-
-
-# User configuration
-
-# source scripts for node version manager
-source /usr/share/nvm/init-nvm.sh
-
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/microchip/mplabx/v3.55/mplab_ide/bin
-"
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# export android studio variable
-# export ANDROID_HOME=/opt/android-studio
-export ANDROID_HOME=/home/shane/Android/Sdk
-export ANDROID_SDK_HOME=/home/shane/Android/Sdk
-
-# set theos environment variable
-export THEOS=~/theos
-export SDKVERSION=9.2
-
-# export keras backend to tensorflow
-export KERAS_BACKEND=tensorflow
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-
-# RubyGems path
-# PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-
-# add user-made binaries to path
-export PATH="$HOME/bin:$PATH"
-
-
-# Run the following commands upon login
- 
-# start a tmux shell with login
-if [[ ! $TERM =~ screen ]]; then
-  exec tmux
-fi
-
-# echo '\n'; chuck | cowsay;echo '\n'
-
-if [ $((1 + RANDOM % 10)) = 7 ]; then
-    chuck | cowsay;echo '\n'
-fi
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -134,41 +86,13 @@ fi
 #   export EDITOR='mvim'
 # fi
 
+# Start tmux on login
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    exec tmux
+fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# disable software flow control (locks VIM when ctrl-s is sent (XOFF))
-# note: press ctrl-q (XON) to resume should this be disabled
-stty -ixon
-
-# tmux
-
-# annoyingly, I can't get ~/.Xinitrc to work correctly, so I am adding the
-# command to remap caps and ctrl here instead
-# xmodmap ~/.Xmodmap
-# /usr/bin/xcape -e 'Caps_Lock=Escape' -t 100
-
-# colored man pages!!!
-# ## not currently useful since 'man' is an alias for viman vim plugin!
-# man() {
-#     LESS_TERMCAP_md=$'\e[01;31m' \
-#     LESS_TERMCAP_me=$'\e[0m' \
-#     LESS_TERMCAP_se=$'\e[0m' \
-#     LESS_TERMCAP_so=$'\e[01;44;33m' \
-#     LESS_TERMCAP_ue=$'\e[0m' \
-#     LESS_TERMCAP_us=$'\e[01;32m' \
-#     command man "$@"
-# }
-
-# function for viewing markdown files in terminal
-markdown() { pandoc "$1" | lynx -stdin; }
-
-# use older version of node for hostvana
-# nvm use 8.9.4
-
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -178,35 +102,17 @@ markdown() { pandoc "$1" | lynx -stdin; }
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# alias lock=". ~/scripts/lock.sh"
-alias lockme="lock -pt \"`chuck | fold -w 80 -s`\n\n`date | awk '{print $1\" \"$2\" \"$3}'` - Shane Ryan's ThinkPad\" -f Anonymous-Pro-Bold-for-Powerline"
-alias cpp="g++ -Wall -Werror -Wextra"
-alias vpn="cat ~/.passfile | sudo openconnect vpnaccess.nd.edu -u sryan8 --passwd-on-stdin"
-alias mountRO="mount -t ntfs -o uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000 /dev/sda2 /run/media/shane/46E4D51AE4D50D55"
-# The following is used to fire up IPython prompt according to the current
-# python used in a virtualenv
-alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
-# alias remote='vpn &;ssh sryan8@remote101.helios.nd.edu'
-# the above needs to be fixed... want to:  connects to the vpn, sends the process to the background,
-# and then uses ssh to login to an appropriate campus machine.
-alias remote="ssh sryan8@remote101.helios.nd.edu"
-alias student="ssh sryan8@student00.cse.nd.edu"
-# more alias stuffz
-alias g="grep"
-alias ls="ls --color=auto"
-# aliases for launching Office products in wine
-alias word="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/WINWORD.EXE"
-
-alias powerpoint="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/POWERPNT.EXE"
-
-alias excel="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/EXCEL.EXE"
-
-alias publisher="WINEARCH=win32 WINEPREFIX=/home/$USER/.wine32 wine /home/shane/.wine32/drive_c/Program\ Files/Microsoft\ Office/Office14/MSPUB.EXE"
-
-# alias for starting android emulator using system libraries for a nexus 5
-alias nexus5="~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_24 -use-system-libs"
-
-# empty that young  trash
-alias empty="rm -rf /home/shane/.local/share/Trash/files"
-
-
+#
+# Backup alias
+#
+alias backup="sudo rsync -aAXv --delete --quiet --exclude={\"/dev/*\",\"/proc/*\",\"/sys/*\",\"/tmp/*\",\"/run/*\",\"/mnt/*\",\"/media/*\",\"/lost+found\"} / /run/media/shane/Stuff/Arch/"
+#
+# Mount bitlocker encrypted external drive alias
+#
+alias dislock="sudo dislocker -v -V /dev/sdc1 -u /mnt/ntfs && sudo mount -o loop /mnt/ntfs/dislocker-file /mnt/encrypted && cd /mnt/encrypted"
+#
+# And unmount prior to shutdown
+#
+alias relock="sudo umount /mnt/encrypted && sudo umount /mnt/ntfs/"
+#
+source /usr/share/nvm/init-nvm.sh
